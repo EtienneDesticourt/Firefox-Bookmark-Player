@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Bookmark Player",
+  "version": "1.0",
+  "description": "Goes through the links in a top-level bookmark folder, waits for the page to stop playing music before switching to the next link.",
+  "icons": {
+    "48": "icons/icon.png"
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "bookmark-it-extension@mozilla.org",
+      "strict_min_version": "47.0a1"
+    }
+  },
+
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_popup": "popups/bookmarks.html"
+  },
+
+  "background": {
+    "scripts": ["background-script.js"]
+  },
+
+  "permissions": ["bookmarks", "tabs", "alarms"]
+}
