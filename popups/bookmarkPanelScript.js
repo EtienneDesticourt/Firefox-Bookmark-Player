@@ -39,5 +39,13 @@ function displayFolders(bookmarkRoot){
 	}
 }
 
+function checkTitle(title){
+	if (title == "Stop Playing"){
+		port.postMessage("STOP PLAYING THIS IS NOT A FOLDER");
+		window.close();
+	}
+}
+
+chrome.browserAction.getTitle({}, checkTitle);
 browser.bookmarks.getTree(displayFolders);
 var port = chrome.runtime.connect({name: "popupPort"});

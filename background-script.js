@@ -63,6 +63,7 @@ function turnOff(){
 	playing = false;
 	currentLinkIndex = 0;
 	chrome.browserAction.setIcon({path: "icons/icon.png"});
+	chrome.browserAction.setTitle({title: "Play Bookmarks"});
 }
 
 function updatePlaylistTab(tab){	
@@ -85,6 +86,7 @@ function turnOn(){
 	browser.tabs.query({active: true, currentWindow: true}, initActiveTab);
 	chrome.alarms.create({periodInMinutes});
 	chrome.browserAction.setIcon({path: "icons/icon-off.png"});
+	chrome.browserAction.setTitle({title: "Stop Playing"});
 }
 
 //BOOKMARK SELECTION LOGIC
@@ -125,6 +127,10 @@ function playAll(bookmarkRoot, folderName){
 //CONNECTION TO POPUP SCRIPT
 
 function onFolderClicked(folderName){
+	if (folderName == "STOP PLAYING THIS IS NOT A FOLDER"){ //If someone has a playlist folder with this name I'll just give up on life...
+		turnOff();
+		return;
+	}
 	chrome.bookmarks.getTree(function(bookmarkRoot){
 		playAll(bookmarkRoot, folderName);
 	});
