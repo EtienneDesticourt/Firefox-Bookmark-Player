@@ -2,9 +2,8 @@ var playlistFolder;
 var currentLinkIndex = 0;
 var playlistTab;
 var lastCheckFailed = false;
-var periodInMinutes = 0.166 / 2;
+var periodInMinutes = 0.166 / 2; //5 seconds, will wait 2*5s to go to next link on inaudible tab
 var playing = false;
-var tabInitialized = false;
 
 //LINK ITERATION LOGIC
 
@@ -62,35 +61,30 @@ function playNextLink(){
 function turnOff(){
 	browser.alarms.clearAll(function(e){});
 	playing = false;
-	tabInitialized = false;
 	currentLinkIndex = 0;
-	chrome.browserAction.setIcon({path: "icons/icon-off.png"});
+	chrome.browserAction.setIcon({path: "icons/icon.png"});
 }
 
-function updatePlaylistTab(tabs){	
-	if (!tabs){ //If tab was closed
+function updatePlaylistTab(tab){	
+	if (!tab){ //If tab was closed
 		turnOff();
 		return;
 	}
-	if (tabs.length){
-		playlistTab = tabs[0];
-	}
 	else{
-		playlistTab = tabs;
+		playlistTab = tab;
 	}
-	tabInitialized = true;
+}
+
+function initActiveTab(tabs) {
+	playlistTab = tabs[0];	
+	playNextLink();
 }
 
 function turnOn(){
 	playing = true;
-	browser.tabs.query({active: true, currentWindow: true}, updatePlaylistTab);
-	//We wait for the callback to be called, if there is an error playing will be set to false
-	while (!tabInitialized && playing){		
-	}
-	playlistFolder = folder;
-	playNextLink();
+	browser.tabs.query({active: true, currentWindow: true}, initActiveTab);
 	chrome.alarms.create({periodInMinutes});
-	chrome.browserAction.setIcon({path: "icons/icon.png"});
+	chrome.browserAction.setIcon({path: "icons/icon-off.png"});
 }
 
 //BOOKMARK SELECTION LOGIC
@@ -124,6 +118,7 @@ function playAll(bookmarkRoot, folderName){
 
 	if (folder){
 		turnOff(); //stop if it was already running
+		playlistFolder = folder;
 		turnOn();
 	}
 }
