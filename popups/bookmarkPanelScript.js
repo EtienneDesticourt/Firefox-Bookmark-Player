@@ -1,6 +1,20 @@
+function onFolderClicked(event) {
+	var t = event.target;
+	port.postMessage(t.innerHTML);
+	window.close();
+}
+
 function clearPopup(){
 	var ul = document.getElementById("list");
 	ul.innerHTML = '';
+}
+
+function addFolder(name){
+	var ul = document.getElementById("list");
+	var li = document.createElement("li");
+	li.appendChild(document.createTextNode(name));	
+	li.addEventListener('click', onFolderClicked);
+	ul.appendChild(li);	
 }
 
 function getBookmarkFolderMenu(bookmarkRoot){
@@ -10,20 +24,6 @@ function getBookmarkFolderMenu(bookmarkRoot){
 		alert("The add-on is outdated.");
 	}
 	return folderMenu;
-}
-
-function onFolderClicked(event) {
-	var t = event.target;
-	port.postMessage(t.innerHTML);
-	window.close();
-}
-
-function addFolder(name){
-	var ul = document.getElementById("list");
-	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(name));	
-	li.addEventListener('click', onFolderClicked);
-	ul.appendChild(li);	
 }
 
 function displayFolders(bookmarkRoot){

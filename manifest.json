@@ -9,7 +9,7 @@
 
   "applications": {
     "gecko": {
-      "id": "bookmark-it-extension@mozilla.org",
+      "id": "bookmark-player@mozilla.org",
       "strict_min_version": "47.0a1"
     }
   },
