@@ -1,0 +1,23 @@
+body {
+	background-color: #f5f8fc;
+	width:300px; 
+	height:200px;
+}
+
+ul {
+    list-style-image: url('../icons/folder-icon.png');
+}
+
+ul li {
+	background-color: #eef3fa;
+	margin-bottom: 1px;
+	cursor: pointer;
+	border-color: #eef3fa;
+    border-style: solid;
+    border-width: 1px;
+}
+
+ul li:hover{
+	background-color: #e5edf9;
+	border-color: #b8d6fb;
+}
